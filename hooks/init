@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+export GEM_HOME={{pkg.path}}
+export GEM_PATH="$(hab pkg path core/ruby)/lib/ruby/gems/2.3.0:$(hab pkg path core/bundler):$GEM_HOME"
+
+ln -sf {{pkg.path}}/Gemfile {{pkg.svc_path}}
+ln -sf {{pkg.path}}/Gemfile.lock {{pkg.svc_path}}
+ln -sf {{pkg.path}}/vendor {{pkg.svc_path}}
+ln -sf {{pkg.path}}/app.rb {{pkg.svc_path}}
+
+cd {{pkg.svc_path}}
+exec 2>1&
+exec bundle install --path vendor/bundle

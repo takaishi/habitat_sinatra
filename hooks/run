@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+export GEM_HOME={{pkg.path}}
+export GEM_PATH="$(hab pkg path core/ruby)/lib/ruby/gems/2.3.0:$(hab pkg path core/bundler):$GEM_HOME"
+cd {{pkg.svc_path}}
+exec 2>&1
+exec bundle exec ruby app.rb -o 0.0.0.0 -p 8080 
